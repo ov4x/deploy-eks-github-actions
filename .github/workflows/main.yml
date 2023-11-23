@@ -6,7 +6,7 @@ env:
   AWS_REGION_NAME: "ap-southeast-1"
 
 on:
-  commit:
+  push:
     branches:
       - master
 
@@ -21,7 +21,7 @@ jobs:
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
       with:
-        version: 'v1.27.0'
+        version: 'v1.28.0'
       id: install
     
     - name: Configure my AWS credentials
