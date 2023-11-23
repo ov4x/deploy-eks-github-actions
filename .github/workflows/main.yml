@@ -6,7 +6,7 @@ env:
   AWS_REGION_NAME: "ap-southeast-1"
 
 on:
-  push:
+  commit:
     branches:
       - master
 
