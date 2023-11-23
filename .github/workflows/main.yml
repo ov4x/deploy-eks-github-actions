@@ -38,6 +38,7 @@ jobs:
         REPOSITORY     : reponame
         IMAGE_TAG      : 1.1
       run : |
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 078390452561.dkr.ecr.ap-south-1.amazonaws.com
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       
