@@ -1,8 +1,5 @@
 name: CI-CD-Pipeline-to-EKS
 env:
-  REGISTRY       : ${{ login-ecr.outputs.registry }}
-  REPOSITORY     : repo-name
-  IMAGE_TAG      : 1.1
   AWS_REGION_NAME: "ap-southeast-1"
 
 on:
@@ -32,6 +29,10 @@ jobs:
         aws-region           :  ${{ env.AWS_REGION_NAME }}
 
     - name: Build, tag, push docker image to Amazon ECR
+      env :
+        REGISTRY       : ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY     : repo-name
+        IMAGE_TAG      : 1.1
       run : |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
