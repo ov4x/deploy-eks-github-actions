@@ -1,0 +1,45 @@
+name: CI-CD-Pipeline-to-EKS
+env:
+  REGISTRY       : ${{ steps.login-ecr.outputs.regisrty }}
+  REPOSITORY     : repo-name
+  IMAGE_TAG      : 1.1
+  AWS_REGION_NAME: "ap-southeast-1"
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  my_ci_cd:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Git clone repo
+      uses: actions/chekout@v3
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v2.0
+      with:
+        version: 'v1.27.0'
+      id: install
+    
+    - name: Configure my AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id    :  ${{ secrets.MY_AWS_ACCESS_KEY }}
+        aws-secret-access-key:  ${{ secrets.MY_AWS_SECRET_KEY }}
+        aws-region           :  ${{ env.AWS_REGION_NAME }}
+
+    - name: Build, tag, push docker image to Amazon ECR
+      run : |
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+      
+    - name: Update kube config
+      run : aws eks update-kubeconfig --name cluster-name
+    
+    - name: Deploy to EKS
+      run : |
+        kubectl apply -f deployment.yaml --context cluster-name
+        kubectl apply -f service.yaml --context cluster-name
