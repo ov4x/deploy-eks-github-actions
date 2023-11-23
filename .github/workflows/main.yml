@@ -1,6 +1,6 @@
 name: CI-CD-Pipeline-to-EKS
 env:
-  REGISTRY       : ${{ steps.login-ecr.outputs.regisrty }}
+  REGISTRY       : ${{ steps.login-ecr.outputs.registry }}
   REPOSITORY     : repo-name
   IMAGE_TAG      : 1.1
   AWS_REGION_NAME: "ap-southeast-1"
