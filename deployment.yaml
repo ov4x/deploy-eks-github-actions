@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs
+  labels:
+    app: nodejs
+    env: prod
+    owner: ovax
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: work
+  template:
+    metadata:
+      labels:
+        project: work
+    spec:
+      containers:
+        - name: repo-name
+          image: 078390452561.dkr.ecr.ap-south-1.amazonaws.com/repo-name:1.1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
