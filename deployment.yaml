@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: repo-name
-          image: 078390452561.dkr.ecr.ap-south-1.amazonaws.com/repo-name:1.1
+          image: 078390452561.dkr.ecr.ap-south-1.amazonaws.com/reponame:1.1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
