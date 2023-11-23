@@ -38,7 +38,6 @@ jobs:
         REPOSITORY     : reponame
         IMAGE_TAG      : 1.1
       run : |
-        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 078390452561.dkr.ecr.ap-south-1.amazonaws.com
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       
@@ -47,5 +46,5 @@ jobs:
     
     - name: Deploy to EKS
       run : |
-        kubectl apply -f deployment.yaml --context cluster-name
-        kubectl apply -f service.yaml --context cluster-name
+        kubectl apply -f deployment.yaml
+        kubectl apply -f service.yaml
