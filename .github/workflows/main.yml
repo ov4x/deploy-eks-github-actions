@@ -1,6 +1,6 @@
 name: CI-CD-Pipeline-to-EKS
 env:
-  AWS_REGION_NAME: "ap-southeast-1"
+  AWS_REGION_NAME: "ap-south-1"
 
 on:
   push:
